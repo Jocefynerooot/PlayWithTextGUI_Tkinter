@@ -86,12 +86,61 @@ class PlayWithText:
         userText.event_generate("<<Redo>>")
 
     def help(self):
-        tmsg.showinfo(
+        tmsg.showinfo(title="How to Use",message=
             "You can use this software for manipulating text in between your work sometimes you have to manipulate text like convert all text into lowercase or uppercase etc and you can do this manually and you also know it is a big headech to you can use this app to do thse things perfetly and in a good manner. Thanks for using my app"
         )
 
     def click(self, event):
-        pass
+      try:
+        global userText, userTextResult, file
+        text = event.widget.cget("text")
+        val = 'empty'
+        print(text)
+  
+        if len(userTextResult.get(1.0, END)) != len(userText.get(1.0, END)):
+          newVal = str(userText.get(1.0, END)).replace(str(userTextResult.get(1.0, END)), " ")
+  
+        if text == "Capitalize":
+          userTextResult.delete(1.0, END) 
+          val = newVal.capitalize() + ""
+          userTextResult.insert(0.0, val)
+          
+        elif text == "Upper Case":
+          userTextResult.delete(1.0, END) 
+          val = newVal.upper() + ""
+          userTextResult.insert(0.0, val)
+          
+        elif text == "Lower Case":
+          userTextResult.delete(1.0, END) 
+          val = newVal.lower() + ""
+          userTextResult.insert(0.0, val)
+          
+        elif text == "Cap Each Word":
+          userTextResult.delete(1.0, END) 
+          val = self.capitalizeEachWord(newVal)+ ""
+          userTextResult.insert(0.0, val)
+          
+        elif text == "Copy":
+          self.copy()
+          
+        elif text == "Cut":
+          self.cut()
+          
+        elif text == "Paste":
+          self.paste()
+          
+        elif text == "Save":
+          self.saveFile()
+          
+        elif text == "Open":
+          self.openFile()
+          
+        elif text == "Delete":
+          self.newFile()
+      except Exception as err:
+        print("Something Went wrong")
+          
+      
 
     # Functions For Themes
     def shiftMode(self, event):
@@ -187,6 +236,7 @@ if __name__ == "__main__":
                          bg=f"{btnColor}",
                          fg="white")
         modeBtn.pack(pady=15, padx=10, side=LEFT)
+        modeBtn.bind("<Button-1>", playWithText.click)
 
     # Menu Bar
     menuBar = Menu(root)
@@ -198,21 +248,21 @@ if __name__ == "__main__":
     fileMenu.add_command(label="Exit", command=quit)
 
     editMenu = Menu(menuBar, tearoff=0)
-    editMenu.add_command(label="Copy")
-    editMenu.add_command(label="Cut")
-    editMenu.add_command(label="Paste")
+    editMenu.add_command(label="Copy" , command=playWithText.copy)
+    editMenu.add_command(label="Cut" , command=playWithText.cut)
+    editMenu.add_command(label="Paste" , command=playWithText.paste)
     editMenu.add_separator()
-    editMenu.add_command(label="Undo")
-    editMenu.add_command(label="Redo")
+    editMenu.add_command(label="Undo" , command=playWithText.undo)
+    editMenu.add_command(label="Redo" , command=playWithText.redo)
 
     themeMenu = Menu(menuBar, tearoff=0)
-    themeMenu.add_command(label="Light Theme")
-    themeMenu.add_command(label="Dark Theme")
-    themeMenu.add_command(label="Red Theme")
-    themeMenu.add_command(label="Purple Theme")
+    themeMenu.add_command(label="Light Theme", command=playWithText.lightTheme)
+    themeMenu.add_command(label="Dark Theme", command=playWithText.darkTheme)
+    themeMenu.add_command(label="Red Theme", command=playWithText.redTheme)
+    themeMenu.add_command(label="Purple Theme", command=playWithText.purpleTheme)
 
     helpMenu = Menu(menuBar, tearoff=0)
-    helpMenu.add_command(label="How To Use")
+    helpMenu.add_command(label="How To Use", command=playWithText.help)
 
     menuBar.add_cascade(label="File", menu=fileMenu)
     menuBar.add_cascade(label="Edit", menu=editMenu)
