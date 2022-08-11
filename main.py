@@ -13,8 +13,8 @@ class PlayWithText:
         return returnText
 
     def newFile(self):
-        if len(userTextResult.get(1.0, END) != len(userText.get(1.0, END))):
-            newVal = str(userText.get(1.0, End)).replace(
+        if len(userTextResult.get(1.0, END)) != len(userText.get(1.0, END)):
+            newVal = str(userText.get(1.0, END)).replace(
                 str(userTextResult.get(1.0, END)), "")
             userTextResult.delete(1.0, END)
             userText.delete(1.0, END)
@@ -28,7 +28,7 @@ class PlayWithText:
             file = None
         else:
             root.title(os.path.basename(file) + " - PlayWithText")
-            userText.delete(1.0, " - PlayWithText")
+            userText.delete(1.0, END)
             f = open(file, 'r')
             userText.insert(1.0, f.read())
             userTextResult.delete(1.0, END)
@@ -195,7 +195,7 @@ if __name__ == "__main__":
     fileMenu.add_command(label="Open", command=playWithText.openFile)
     fileMenu.add_command(label="Save", command=playWithText.saveFile)
     fileMenu.add_separator()
-    fileMenu.add_command(label="Exit")
+    fileMenu.add_command(label="Exit", command=quit)
 
     editMenu = Menu(menuBar, tearoff=0)
     editMenu.add_command(label="Copy")
