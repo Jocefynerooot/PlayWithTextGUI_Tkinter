@@ -29,7 +29,7 @@ if __name__ == "__main__":
   userTextResult = Text(screensFame, font="lucida 14", width=35, height=15)
   userTextResult.pack(padx=10, side=LEFT)
 
-  modeBtns = ["Enable Relax Mode", "Enable Light Mode", "Text"]
+  modeBtns = ["Enable Relax Mode", "Enable Light Mode"]
   for btn in modeBtns:
       btnColor = "#656572"
       modeBtn = Button(modeBtnsFrame,
@@ -52,7 +52,37 @@ if __name__ == "__main__":
                        fg="white")
       modeBtn.pack(pady=15, padx=10, side=LEFT)
 
+  # Menu Bar
+  menuBar = Menu(root)
+  fileMenu = Menu(menuBar, tearoff=0)
+  fileMenu.add_command(label="New")
+  fileMenu.add_command(label="Open")
+  fileMenu.add_command(label="Save")
+  fileMenu.add_separator()
+  fileMenu.add_command(label="Exit")
+  
+  editMenu =   Menu(menuBar, tearoff=0)
+  editMenu.add_command(label="Copy")
+  editMenu.add_command(label="Cut")
+  editMenu.add_command(label="Paste")
+  editMenu.add_separator()
+  editMenu.add_command(label="Undo")
+  editMenu.add_command(label="Redo")
 
+  themeMenu =   Menu(menuBar, tearoff=0)
+  themeMenu.add_command(label="Light Theme")
+  themeMenu.add_command(label="Dark Theme")
+  themeMenu.add_command(label="Red Theme")
+  themeMenu.add_command(label="Purple Theme")
 
+  helpMenu = Menu(menuBar, tearoff=0)
+  helpMenu.add_command(label="How To Use")
+  
+  menuBar.add_cascade(label="File", menu=fileMenu)
+  menuBar.add_cascade(label="Edit", menu=editMenu)
+  menuBar.add_cascade(label="Theme", menu=themeMenu)
+  menuBar.add_cascade(label="Help", menu=helpMenu)
+
+  root.config(menu=menuBar)
 
   root.mainloop()
