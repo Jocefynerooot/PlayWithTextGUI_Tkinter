@@ -3,7 +3,6 @@ import tkinter.messagebox as tmsg
 from tkinter.filedialog import askopenfilename, asksaveasfilename
 import os
 
-
 class PlayWithText:
     def capitalizeEachWord(self, text):
         textr = text.split(" ")
@@ -66,6 +65,17 @@ class PlayWithText:
                     f.close()
                     root.title(os.path.basename(file) + " - PlayWithText")
         else:
+          if len(userTextResult.get(1.0, END)) == 1:
+              msg = tmsg.askokcancel(
+                    title="Result Box is Empty",
+                    message=
+                    "Result box is empty do you want to save your original content"
+                )
+              if msg == True:
+                f = open(file, "w")
+                f.write(str(userText.get(1.0, END)))
+                f.close()
+          else:
             f = open(file, "w")
             f.write(userTextResult.get(1.0, END))
             f.close()
@@ -95,7 +105,6 @@ class PlayWithText:
         global userText, userTextResult, file
         text = event.widget.cget("text")
         val = 'empty'
-        print(text)
   
         if len(userTextResult.get(1.0, END)) != len(userText.get(1.0, END)):
           newVal = str(userText.get(1.0, END)).replace(str(userTextResult.get(1.0, END)), " ")
@@ -138,9 +147,9 @@ class PlayWithText:
         elif text == "Delete":
           self.newFile()
       except Exception as err:
-        print("Something Went wrong")
-          
-      
+        tmsg.showwarning(title="Empty Box",message=
+            "Boxes are Empty Please Enter Some Text To Perform Action"
+        )
 
     # Functions For Themes
     def shiftMode(self, event):
@@ -170,16 +179,43 @@ class PlayWithText:
         buttonsFrame.config(bg=bgColor)
 
     def lightTheme(self):
-        pass
-
+      root.configure(background='white')
+      heading.configure(background="white", fg="#3e1d7e")
+      modeBtnsFrame.config(bg="white")
+      screensFrame.config(bg="white")
+      userText.configure(background="white", fg="black")
+      userTextResult.configure(background='white', fg="black")
+      buttonsFrame.config(bg="white")
+                        
     def darkTheme(self):
-        pass
+      root.configure(background='black')
+      heading.configure(background="black", fg="white")
+      modeBtnsFrame.config(bg="black")
+      screensFrame.config(bg="black")
+      userText.configure(background="grey", fg="white")
+      userTextResult.configure(background='grey', fg="white")
+      buttonsFrame.config(bg="black")
+                        
 
     def redTheme(self):
-        pass
+      root.configure(background='#870000')
+      heading.configure(background="#870000", fg="white")
+      modeBtnsFrame.config(bg="#870000")
+      screensFrame.config(bg="#870000")
+      userText.configure(background="#b51f1f", fg="white")
+      userTextResult.configure(background='#b51f1f', fg="white")
+      buttonsFrame.config(bg="#870000")
+                        
 
     def purpleTheme(self):
-        pass
+      root.configure(background='#3b2664')
+      heading.configure(background="#3b2664", fg="white")
+      modeBtnsFrame.config(bg="#3b2664")
+      screensFrame.config(bg="#3b2664")
+      userText.configure(background="#664a9d", fg="white")
+      userTextResult.configure(background='#664a9d', fg="white")
+      buttonsFrame.config(bg="#3b2664")
+                        
 
 
 if __name__ == "__main__":
