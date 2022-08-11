@@ -1,4 +1,6 @@
 from tkinter import *
+import tkinter.messagebox as tmsg
+
 
 class PlayWithText:
     def capitalizeEachWord(self, text):
@@ -9,7 +11,11 @@ class PlayWithText:
         return returnText
 
     def newFile(self):
-        pass
+        if len(userTextResult.get(1.0, END) != len(userText.get(1.0, END))):
+            newVal = str(userText.get(1.0, End)).replace(
+                str(userTextResult.get(1.0, END)), "")
+            userTextResult.delete(1.0, END)
+            userText.delete(1.0, END)
 
     def openFile(self):
         pass
@@ -18,22 +24,24 @@ class PlayWithText:
         pass
 
     def cut(self):
-        pass
+        userText.event_generate("<<Cut>>")
 
     def copy(self):
-        pass
+        userText.event_generate("<<Copy>>")
 
     def paste(self):
-        pass
+        userText.event_generate("<<Paste>>")
 
     def undo(self):
-        pass
+        userText.event_generate("<<Undo>>")
 
     def redo(self):
-        pass
+        userText.event_generate("<<Redo>>")
 
     def help(self):
-        pass
+        tmsg.showinfo(
+            "You can use this software for manipulating text in between your work sometimes you have to manipulate text like convert all text into lowercase or uppercase etc and you can do this manually and you also know it is a big headech to you can use this app to do thse things perfetly and in a good manner. Thanks for using my app"
+        )
 
     def click(self, event):
         pass
