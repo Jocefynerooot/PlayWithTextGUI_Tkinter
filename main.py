@@ -95,14 +95,30 @@ class PlayWithText:
 
     # Functions For Themes
     def shiftMode(self, event):
-        pass
+        mode = event.widget.cget('text')
+        if mode == "Enable Relax Mode":
+            self.theme(bgColor="#3b2664",
+                       textColor="white",
+                       titleColor="white",
+                       textAreaColor="#664a9d")
+        else:
+            self.theme(bgColor="white",
+                       textColor="black",
+                       titleColor="#3e1d7e",
+                       textAreaColor="white")
 
     def theme(self,
-              bgColo="white",
+              bgColor="white",
               textColor="black",
               titleColor="#3b2664",
               textAreaColor="black"):
-        pass
+        root.configure(background=f"{bgColor}")
+        heading.configure(background=f"{bgColor}", fg=f"{titleColor}")
+        modeBtnsFrame.config(bg=f"{bgColor}")
+        screensFrame.config(bg=f"{bgColor}")
+        userText.configure(background=textAreaColor, fg=textColor)
+        userTextResult.configure(background=textAreaColor, fg=textColor)
+        buttonsFrame.config(bg=bgColor)
 
     def lightTheme(self):
         pass
@@ -135,17 +151,17 @@ if __name__ == "__main__":
     modeBtnsFrame = Frame(root)
     modeBtnsFrame.pack()
 
-    screensFame = Frame(root)
-    screensFame.pack()
+    screensFrame = Frame(root)
+    screensFrame.pack()
 
     buttonsFrame = Frame(root)
     buttonsFrame.pack()
 
     # Text Areas Here
-    userText = Text(screensFame, font="lucida 14", width=35, height=15)
+    userText = Text(screensFrame, font="lucida 14", width=35, height=15)
     userText.pack(padx=10, side=LEFT)
 
-    userTextResult = Text(screensFame, font="lucida 14", width=35, height=15)
+    userTextResult = Text(screensFrame, font="lucida 14", width=35, height=15)
     userTextResult.pack(padx=10, side=LEFT)
 
     modeBtns = ["Enable Relax Mode", "Enable Light Mode"]
@@ -157,6 +173,7 @@ if __name__ == "__main__":
                          bg=f"{btnColor}",
                          fg="white")
         modeBtn.pack(pady=15, padx=10, side=LEFT)
+        modeBtn.bind("<Button-1>", playWithText.shiftMode)
 
     allBtns = [
         "Capitalize", "Upper Case", "Lower Case", "Cap Each Word", "Copy",
@@ -174,9 +191,9 @@ if __name__ == "__main__":
     # Menu Bar
     menuBar = Menu(root)
     fileMenu = Menu(menuBar, tearoff=0)
-    fileMenu.add_command(label="New")
-    fileMenu.add_command(label="Open")
-    fileMenu.add_command(label="Save")
+    fileMenu.add_command(label="New", command=playWithText.newFile)
+    fileMenu.add_command(label="Open", command=playWithText.openFile)
+    fileMenu.add_command(label="Save", command=playWithText.saveFile)
     fileMenu.add_separator()
     fileMenu.add_command(label="Exit")
 
