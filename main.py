@@ -1,5 +1,7 @@
 from tkinter import *
 import tkinter.messagebox as tmsg
+from tkinter.filedialog import askopenfilename, asksaveasfilename
+import os
 
 
 class PlayWithText:
@@ -18,10 +20,55 @@ class PlayWithText:
             userText.delete(1.0, END)
 
     def openFile(self):
-        pass
+        global file
+        file = askopenfilename(defaultextension=".txt",
+                               filetypes=[("All Files", "*.*"),
+                                          ("Text Documents", "*.txt")])
+        if file == "":
+            file = None
+        else:
+            root.title(os.path.basename(file) + " - PlayWithText")
+            userText.delete(1.0, " - PlayWithText")
+            f = open(file, 'r')
+            userText.insert(1.0, f.read())
+            userTextResult.delete(1.0, END)
+            f.close()
 
     def saveFile(self):
-        pass
+        global file
+        if file == None:
+            if file == "":
+                file = None
+            if len(userTextResult.get(1.0, END)) > 1:
+                file = asksaveasfilename(initialfile="untitled.txt",
+                                         defaultextension=".txt",
+                                         filetypes=[("All Files", "*.*"),
+                                                    ("Text Documents", "*.txt")
+                                                    ])
+                f = open(file, "w")
+                f.write(userTextResult.get(1.0, END))
+                f.close()
+                root.title(os.path.basename(file) + " - PlayWithText")
+            else:
+                msg = tmsg.askokcancel(
+                    title="Result Box is Empty",
+                    message=
+                    "Result box is empty do you want to save your original content"
+                )
+                if msg == True:
+                    file = asksaveasfilename(initialfile="untitled.txt",
+                                             defaultextension=".txt",
+                                             filetypes=[("All Files", "*.*"),
+                                                        ("Text Documents",
+                                                         "*.txt")])
+                    f = open(file, "w")
+                    f.write(userTextResult.get(1.0, END))
+                    f.close()
+                    root.title(os.path.basename(file) + " - PlayWithText")
+        else:
+            f = open(file, "w")
+            f.write(userTextResult.get(1.0, END))
+            f.close()
 
     def cut(self):
         userText.event_generate("<<Cut>>")
@@ -71,6 +118,8 @@ class PlayWithText:
 
 
 if __name__ == "__main__":
+    file = None
+    playWithText = PlayWithText()
     # Gui Starts Here
     root = Tk()
     root.title("PlayWithText - Jocefyneroot")
